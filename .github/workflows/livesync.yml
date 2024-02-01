@@ -1,0 +1,47 @@
+# name: Live Sync
+# on: 
+#   schedule:
+#     - cron: '* * * * *'
+
+# jobs:
+#   merge:
+#     runs-oin: ubuntu-latest
+#     steps:
+#       - user: actions/checkout@v2
+#       - name: livesync
+#         run: |
+#           git config --global user.name "eaniya198"
+#           git config --global .user.email "eaniya198@gmail.com"
+
+#           git pull --unshallow
+
+#           git remote add upstream https://github.com/dispiny/tomcat-helloworld.git
+#           git fetch upstream
+
+#           git checkout -b feature/master origin/feature/master
+#           git merge --no-edit upstream/feature/master
+#           git push origin feature/master
+
+#           git checkout master
+#           git merge --no-edit upstream/master
+#           git push origin master
+
+
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: '* * * * *' # every 30 minutes
+  workflow_dispatch: # on button click
+
+jobs:
+  sync:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: tgymnich/fork-sync@v1.8
+        with:
+          owner: llvm
+          base: master
+          head: master
